@@ -24,16 +24,16 @@ function updateChart(data) {
   const sortedData = data.sort((a, b) => b.id - a.id);
 
   // Slice to get the latest 10 entries
-  const latestData = sortedData.slice(sortedData.length - 10, sortedData.length);
+  const latestData = sortedData.slice(0, 10);
 
   // Reverse the order to display the most recent data last
   latestData.reverse();
 
   // Extract temperatures and first 10 characters of the timestamp as labels
   const labels = latestData.map(item => {
-    const timestamp = item.timestamp ? item.timestamp.substring(2, 10) : '';
-    console.log(timestamp) // Get first 10 characters of timestamp
-    return `${timestamp}`;
+    const timestamp = item.timestamp ? item.timestamp.substring(0, 10) : '';
+    console.log(timestamp); // Get first 10 characters of timestamp
+    return ${timestamp};
   });
   
   const temperatureData = latestData.map(item => item.temperature);
@@ -73,60 +73,194 @@ function updateChart(data) {
   // Log the chart instance to verify if it's created correctly
   console.log('Chart instance:', myChart);
 }
-
+   
 // Trigger the data fetch when the document is fully loaded
-document.addEventListener('DOMContentLoaded', fetchData);
-
-
-
-function getbutton(){
-  console.log("true");
-turnOn,style.backgroundColor = 'pink';
-}
-document.getElementById("turnOn").onclick = getbutton;
+document.addEventListener('DOMContentLoaded', fetchData)
 </script>
 
 
 <style>
-
-      body{
+    body {
         font-family: 'Lato', sans-serif;
-
-        background: rgb(255,255,255);
-        background: linear-gradient(0deg, rgba(255,255,255,1) 22%, rgba(0,0,0,1) 76%, rgba(0,0,0,1) 92%);
-        
-      }
-      .h1{
+        background: rgb(255, 255, 255);
+        background: linear-gradient(0deg, rgba(255, 255, 255, 1) 22%, rgba(0, 0, 0, 1) 76%, rgba(0, 0, 0, 1) 92%);
+    }
+    .h1 {
         text-decoration: underline;
         color: white;
         font-weight: 80;
-      }
-      .h2{
+    }
+    .h2 {
         color: white;
         text-align: center;
         text-decoration: underline;
         font-weight: 60;
         font-size: xx-large;
-      }
-      .button{
-        color: black;
-        background-color: white;
-        border: solid,1cm,1cm, black;
-        border-radius: 1em;
-        font-weight: 20;
-      }
+    }
+
+    .motor.controll{
+      border-radius: 18px;
+      background: linear-gradient(145deg, #e6e6e6, #ffffff);
+      box-shadow:  5px 5px 10px #bfbfbf,
+             -5px -5px 10px #ffffff;
+
+    }
+    .switch {
+        --switch-width: 40px;
+        --switch-height: 19px;
+        --switch-bg: rgb(131, 131, 131);
+        --switch-checked-bg: rgb(0, 218, 0);
+        --switch-offset: calc((var(--switch-height) - var(--circle-diameter)) / 2);
+        --switch-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
+        --circle-diameter: 18px;
+        --circle-bg: #fff;
+        --circle-shadow: 1px 1px 2px rgba(146, 146, 146, 0.45);
+        --circle-checked-shadow: -1px 1px 2px rgba(163, 163, 163, 0.45);
+        --circle-transition: var(--switch-transition);
+        --icon-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
+        --icon-cross-color: var(--switch-bg);
+        --icon-cross-size: 5px;
+        --icon-checkmark-color: var(--switch-checked-bg);
+        --icon-checkmark-size: 10px;
+        --effect-width: calc(var(--circle-diameter) / 2);
+        --effect-height: calc(var(--effect-width) / 2 - 1px);
+        --effect-bg: var(--circle-bg);
+        --effect-border-radius: 1px;
+        --effect-transition: all .2s ease-in-out;
+    }
+
+    .switch input {
+        display: none;
+    }
+
+    .switch {
+        display: inline-block;
+    }
+
+    .switch svg {
+        transition: var(--icon-transition);
+        position: absolute;
+        height: auto;
+    }
+
+    .switch .checkmark {
+        width: var(--icon-checkmark-size);
+        color: var(--icon-checkmark-color);
+        transform: scale(0);
+    }
+
+    .switch .cross {
+        width: var(--icon-cross-size);
+        color: var(--icon-cross-color);
+    }
+
+    .slider {
+        box-sizing: border-box;
+        width: var(--switch-width);
+        height: var(--switch-height);
+        background: var(--switch-bg);
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        transition: var(--switch-transition);
+        cursor: pointer;
+    }
+
+    .circle {
+        width: var(--circle-diameter);
+        height: var(--circle-diameter);
+        background: var(--circle-bg);
+        border-radius: inherit;
+        box-shadow: var(--circle-shadow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--circle-transition);
+        z-index: 1;
+        position: absolute;
+        left: var(--switch-offset);
+    }
+
+    .slider::before {
+        content: "";
+        position: absolute;
+        width: var(--effect-width);
+        height: var(--effect-height);
+        left: calc(var(--switch-offset) + (var(--effect-width) / 2));
+        background: var(--effect-bg);
+        border-radius: var(--effect-border-radius);
+        transition: var(--effect-transition);
+    }
+
+    .switch input:checked + .slider {
+        background: var(--switch-checked-bg);
+    }
+
+    .switch input:checked + .slider .checkmark {
+        transform: scale(1);
+    }
+
+    .switch input:checked + .slider .cross {
+        transform: scale(0);
+    }
+
+    .switch input:checked + .slider::before {
+        left: calc(100% - var(--effect-width) - (var(--effect-width) / 2) - var(--switch-offset));
+    }
+
+    .switch input:checked + .slider .circle {
+        left: calc(100% - var(--circle-diameter) - var(--switch-offset));
+        box-shadow: var(--circle-checked-shadow);
+    }
+    .motor-text {
+        color: white;
+        text-align: left;
+    }
 </style>
 </head>
 <body>
-
-  <nav>
-    <button id="turnOn" class="button">An</button>
-    <button id="turnOff" class="button">Aus</button>
+  <h1 class="h1">Smarte Überwachung</h1>
+  <h2 class="h2">Temperatur</h2>
+  <canvas id="myChart" width="100" height="50"></canvas>
+  <nav class="motor-controll">
+    <label class="switch">
+      <input id="motorCheckbox" type="checkbox">
+      <div class="slider">
+          <div class="circle">
+              <svg class="cross" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 365.696 365.696" y="0" x="0" height="6" width="6" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <g>
+                      <path data-original="#000000" fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25zm0 0"></path>
+                  </g>
+              </svg>
+              <svg class="checkmark" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0" x="0" height="10" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                  <g>
+                      <path class="" data-original="#000000" fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"></path>
+                  </g>
+              </svg>
+          </div>
+      </div>
+  </label>
+  <label id="motor-text" class="motor-text"></label>
   </nav>
 
-    <h1 class="h1">Smarte Überwachung</h1>
-    <h2 class="h2">Temperatur</h2>
-    <canvas id="myChart" width="100" height="50"></canvas>
+  <script>
+    const motorCheckbox = document.getElementById('motorCheckbox');
+    const motor_text = document.getElementById('motor-text');
 
+    let motorOn = false;
+
+    motorCheckbox.addEventListener('change', function() {
+      if (motorCheckbox.checked) {
+        motorOn = true;
+        console.log("Motor ist eingeschaltet", motorOn);
+        motor_text.textContent = "Motor ist eingeschaltet";
+      } else {
+        motorOn = false;
+        console.log("Motor ist ausgeschaltet", motorOn);
+        motor_text.textContent = "Motor ist ausgeschaltet";
+      }
+    });
+  </script>
 </body>
 </html>
