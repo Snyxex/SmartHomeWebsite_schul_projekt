@@ -31,7 +31,7 @@ function updateChart(data) {
 
   // Extract temperatures and first 10 characters of the timestamp as labels
   const labels = latestData.map(item => {
-    const timestamp = item.timestamp ? item.timestamp.substring(0, 10) : '';
+    const timestamp = item.timestamp ? item.timestamp.substring(2, 10) : '';
     console.log(timestamp) // Get first 10 characters of timestamp
     return `${timestamp}`;
   });
@@ -46,8 +46,8 @@ function updateChart(data) {
   const temperatureDataset = {
     label: 'Temperatur',
     data: temperatureData,
-    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Background color of the bars
-    borderColor: 'rgba(255, 99, 132, 1)', // Border color of the bars
+    backgroundColor: 'rgba(0, 178, 255, 0.8)', // Background color of the bars
+    borderColor: 'rgba(0, 178, 255, 0.8)',// Border color of the bars
     borderWidth: 1
   };
 
@@ -77,10 +77,51 @@ function updateChart(data) {
 // Trigger the data fetch when the document is fully loaded
 document.addEventListener('DOMContentLoaded', fetchData);
 
+
+const turnOn = document.getElementById("turnOn");
+
+turnOn.addEventListener('click', function(){
+     console.log("true");
+     turnOn,style.backgroundColor = 'pink';
+});
+
+
+
     </script>
+    <style>
+      body{
+        font-family: 'Lato', sans-serif;
+
+        background: rgb(255,255,255);
+        background: linear-gradient(0deg, rgba(255,255,255,1) 22%, rgba(0,0,0,1) 76%, rgba(0,0,0,1) 92%);
+        
+      }
+      .h1{
+        text-decoration: underline;
+        color: white;
+        font-weight: 80;
+      }
+      .h2{
+        color: white;
+        text-align: center;
+        text-decoration: underline;
+        font-weight: 60;
+        font-size: xx-large;
+      }
+      .button{
+        color: black;
+        background-color: white;
+        border: solid,1cm,1cm, black;
+        border-radius: 1em;
+        font-weight: 20;
+      }
+    </style>
 </head>
 <body>
-    <h1>Thema: Temperatur und Luftfeuchtigkeit</h1>
-    <canvas id="myChart"></canvas>
+    <h1 class="h1">Smarte Überwachung</h1>
+    <h2 class="h2">Temperatur</h2>
+    <canvas id="myChart" width="100" height="50"></canvas>
+    <button id="turnOn" class="button">An</button>
+    <button id="turnOff" class="button">Aus</button>
 </body>
 </html>
