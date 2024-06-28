@@ -48,10 +48,35 @@ app.get('/fetch-data', async (req, res) => {
   }
 });
 
+// POST-Route zum Speichern der Motor-Daten
+app.post('/saveMotorData', async (req, res) => {
+  const { motorOn } = req.body;
+  
+  try {
+      // Daten in die Supabase-Tabelle 'motor_data' einfügen
+      const { data, error } = await supabase
+          .from('motor_data')
+          .insert([{ motorOn: motorOn }]);
+      
+      if (error) {
+          throw error;
+      }
+
+      console.log('Daten erfolgreich in Supabase eingefügt:', data);
+      res.status(200).json({ message: 'Daten erfolgreich gespeichert' });
+  } catch (error) {
+      console.error('Fehler beim Einfügen in die Datenbank:', error.message);
+      res.status(500).json({ error: 'Fehler beim Speichern der Daten' });
+  }
+});
+
 // Server starten
 app.listen(port, () => {
   console.log(`Server läuft auf http://localhost:${port}`);
 });
+
+
+
 
 
 
