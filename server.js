@@ -25,7 +25,7 @@ async function fetchData() {
   try {
     const { data: sensorData, error } = await supabase
       .from('sensor_data')
-      .select('temperature');
+      .select('id','temperature','timestamp');
 
     if (error) {
       throw error;

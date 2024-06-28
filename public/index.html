@@ -5,7 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Balkendiagramm mit Chart.js</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js" defer></script>
+    <script defer>
+async function fetchData() {
+  try {
+    const response = await fetch('/fetch-data');
+    const data = await response.json();
+    console.log('Fetched data:', data); // Log the fetched data
+    updateChart(data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+}
+
+function updateChart(data) {
+  const ctx = document.getElementById('myChart').getContext('2d');
+
+  // Sort data by id in descending order to get the latest entries first
+  const sortedData = data.sort((a, b) => b.id - a.id);
+
+  // Slice to get the latest 10 entries
+  const latestData = sortedData.slice(0, 10);
+
+  // Reverse the order to display the most recent data last
+  latestData.reverse();
+
+  // Extract timestamps and format them as labels for X-axis
+  const labels = latestData.map(item => {
+    const timestamp = new Date(item.date);
+    return `${timestamp.toLocaleDateString()} ${timestamp.toLocaleTimeString()}`;
+  });
+  
+  const temperatureData = latestData.map(item => item.temperature);
+
+  // Debugging logs
+  console.log('Labels:', labels);
+  console.log('Temperature Data:', temperatureData);
+
+  // Chart.js datasets
+  const temperatureDataset = {
+    label: 'Temperatur',
+    data: temperatureData,
+    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Background color of the bars
+    borderColor: 'rgba(255, 99, 132, 1)', // Border color of the bars
+    borderWidth: 1
+  };
+
+  // Initialize Chart.js
+  const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [temperatureDataset]
+    },
+    options: {
+      scales: {
+        x: {
+          stacked: true // Stacked bar chart
+        },
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // Log the chart instance to verify if it's created correctly
+  console.log('Chart instance:', myChart);
+}
+
+// Trigger the data fetch when the document is fully loaded
+document.addEventListener('DOMContentLoaded', fetchData);
+
+    </script>
 </head>
 <body>
     <h1>Thema: Temperatur und Luftfeuchtigkeit</h1>
