@@ -29,10 +29,10 @@ function updateChart(data) {
   // Reverse the order to display the most recent data last
   latestData.reverse();
 
-  // Extract timestamps and format them as labels for X-axis
+  // Extract temperatures and first 10 characters of the timestamp as labels
   const labels = latestData.map(item => {
-    const timestamp = new Date(item.date);
-    return `${timestamp.toLocaleDateString()} ${timestamp.toLocaleTimeString()}`;
+    const timestamp = item.timestamp.substring(0, 10); // Get first 10 characters of timestamp
+    return `${item.temperature} - ${timestamp}`;
   });
   
   const temperatureData = latestData.map(item => item.temperature);

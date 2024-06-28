@@ -25,7 +25,7 @@ async function fetchData() {
   try {
     const { data: sensorData, error } = await supabase
       .from('sensor_data')
-      .select('id','temperature','timestamp');
+      .select('temperature','timestamp');
 
     if (error) {
       throw error;
@@ -52,3 +52,6 @@ app.get('/fetch-data', async (req, res) => {
 app.listen(port, () => {
   console.log(`Server läuft auf http://localhost:${port}`);
 });
+
+
+
