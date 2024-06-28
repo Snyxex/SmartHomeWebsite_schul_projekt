@@ -24,15 +24,16 @@ function updateChart(data) {
   const sortedData = data.sort((a, b) => b.id - a.id);
 
   // Slice to get the latest 10 entries
-  const latestData = sortedData.slice(0, 10);
+  const latestData = sortedData.slice(sortedData.length - 10, sortedData.length);
 
   // Reverse the order to display the most recent data last
   latestData.reverse();
 
   // Extract temperatures and first 10 characters of the timestamp as labels
   const labels = latestData.map(item => {
-    const timestamp = item.timestamp ? item.timestamp.substring(0, 10) : ''; // Get first 10 characters of timestamp
-    return `${item.temperature} - ${timestamp}`;
+    const timestamp = item.timestamp ? item.timestamp.substring(0, 10) : '';
+    console.log(timestamp) // Get first 10 characters of timestamp
+    return `${item.temperature} ${timestamp}`;
   });
   
   const temperatureData = latestData.map(item => item.temperature);
