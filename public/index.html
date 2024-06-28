@@ -6,6 +6,7 @@
     <title>Balkendiagramm mit Chart.js</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script defer>
+
 async function fetchData() {
   try {
     const response = await fetch('/fetch-data');
@@ -14,6 +15,17 @@ async function fetchData() {
     updateChart(data);
   } catch (error) {
     console.error('Error fetching data:', error);
+  }
+}
+
+async function motorData(){
+  try {
+    const response = await fetch('/upload-data');
+    const data = await response.json();
+    console.log('Uploading Data:', data);
+    
+  }catch(error){
+   console.log('Error Uploading data:', error);
   }
 }
 
@@ -286,56 +298,25 @@ document.addEventListener('DOMContentLoaded', fetchData);
 
 
     <script>
-      const turnOn = document.getElementById('turnOn');
-if(turnOn){
-  turnOn.addEventListener('click',function(){
-  console.log("on");
-});
-}else{
-  console.log("no turnOn");
-};
-
-
-const turnOff = document.getElementById('turnOff');
-if(turnOff){
-  
- turnOff.addEventListener('click',function(){
-  console.log("Off");
-});
-}else{
-  console.log("no turnOn");
-};
 
 const motorCheckbox = document.getElementById('motorCheckbox');
 const motor_text = document.getElementById('motor-text');
 
 let motorOn = false;
 
-motorCheckbox.addEventListener('change', async function() {
-      const motorOn = motorCheckbox.checked;
+motorCheckbox.addEventListener('click',function(){
 
-      try {
-        const response = await fetch('/saveMotorData', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ motorOn })
-        });
+  if(motorCheckbox){
+    console.log('funktioniert');
+    motorOn = true;
+    document.addEventListener('DOMContentLoaded', motorData);
+  }else{
+    console.log('nicht funktioniert');
+    motorOn = false;
+    document.addEventListener('DOMContentLoaded', motorData);
+  }
 
-        if (!response.ok) {
-          throw new Error('Fehler beim Speichern der Daten');
-        }
-
-        const data = await response.json();
-        console.log('Antwort vom Server:', data.message);
-        alert('Daten erfolgreich gespeichert');
-      } catch (error) {
-        console.error('Fehler:', error.message);
-        alert('Fehler beim Speichern der Daten');
-      }
-    });
-
+})
 
 
 
