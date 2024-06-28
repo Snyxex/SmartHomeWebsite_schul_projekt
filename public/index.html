@@ -18,16 +18,7 @@ async function fetchData() {
   }
 }
 
-async function motorData(){
-  try {
-    const response = await fetch('/upload-data');
-    const data = await response.json();
-    console.log('Uploading Data:', data);
-    
-  }catch(error){
-   console.log('Error Uploading data:', error);
-  }
-}
+
 
 function updateChart(data) {
   const ctx = document.getElementById('myChart').getContext('2d');
@@ -300,23 +291,30 @@ document.addEventListener('DOMContentLoaded', fetchData);
     <script>
 
 const motorCheckbox = document.getElementById('motorCheckbox');
-const motor_text = document.getElementById('motor-text');
-
+const motorText = document.getElementById('motor-text');
 let motorOn = false;
 
-motorCheckbox.addEventListener('click',function(){
+motorCheckbox.addEventListener('change', async function() {
+  motorOn = motorCheckbox.checked;
+  motorText.textContent = motorOn ? "Motor ist Eingeschaltet" : "Motor ist Ausgeschaltet";
 
-  if(motorCheckbox){
-    console.log('funktioniert');
-    motorOn = true;
-    document.addEventListener('DOMContentLoaded', motorData);
-  }else{
-    console.log('nicht funktioniert');
-    motorOn = false;
-    document.addEventListener('DOMContentLoaded', motorData);
+  try {
+    const response = await fetch('/saveMotorData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ motorOn })
+    });
+
+    const data = await response.json();
+    console.log('Antwort vom Server:', data.message);
+    alert('Daten erfolgreich gespeichert');
+  } catch (error) {
+    console.error('Fehler:', error.message);
+    alert('Fehler beim Speichern der Daten');
   }
-
-})
+});
 
 
 

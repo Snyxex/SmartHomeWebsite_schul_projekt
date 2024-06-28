@@ -14,6 +14,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 // Statische Dateien aus dem "public"-Verzeichnis bereitstellen
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 
 // Route für die Hauptseite
 app.get('/', (req, res) => {
@@ -48,30 +49,36 @@ app.get('/fetch-data', async (req, res) => {
   }
 });
 
-// POST-Route zum Speichern der Motor-Daten
-async function saveData(){
-  try{
-    const {data: motorData, error} = await supabase
-    .from('motor_Data')
-    .insert(motorOn)
 
-    if (error){
-      throw error;
-  }
-  return motorData;
-}catch(error){
-  console.log("fehler beim übertragen");
-  return [];
-}
-}
-app.get('/upload-data', async (req, res) => {
+async function saveMotorData(motorOn) {
   try {
-    const data = await motorData();
-    res.json(data);
+    const { data, error } = await supabase
+      .from('motor_data')
+      .insert([{ motor_on: motorOn }]);
+
+    if (error) {
+      console.error('Fehler beim Einfügen in die Datenbank:', error.message);
+      return;
+    }
+
+    console.log('Daten erfolgreich in Supabase eingefügt:', data);
   } catch (error) {
-    res.status(500).json({ error: 'Error uploading data' });
+    console.error('Unbekannter Fehler:', error.message);
+  }
+}
+
+app.post('/saveMotorData', async (req, res) => {
+  const { motorOn } = req.body;
+
+  try {
+    await saveMotorData(motorOn);
+    res.json({ message: 'Daten erfolgreich gespeichert' });
+  } catch (error) {
+    res.status(500).json({ error: 'Fehler beim Speichern der Daten' });
   }
 });
+
+
 // Server starten
 app.listen(port, () => {
   console.log(`Server läuft auf http://localhost:${port}`);
