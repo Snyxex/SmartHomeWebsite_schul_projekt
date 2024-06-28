@@ -5,46 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Balkendiagramm mit Chart.js</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <h1>Thema: Temperatur und Luftfeuchtigkeit</h1>
     <canvas id="myChart"></canvas>
-
-    <script>
-        const ctx = document.getElementById('myChart').getContext('2d');
-        
-        // Dummy-Daten für Temperatur und Luftfeuchtigkeit
-        const labels = ['Januar', 'Februar', 'März', 'April', 'Mai'];
-        const temperatureDataset = {
-            label: 'Temperatur',
-            data: [15, 18, 22, 20, 25],
-            backgroundColor: 'rgba(255, 99, 132, 0.2)', // Hintergrundfarbe der Balken
-            borderColor: 'rgba(255, 99, 132, 1)', // Randfarbe der Balken
-            borderWidth: 1
-        };
-        const humidityDataset = {
-            label: 'Luftfeuchtigkeit',
-            data: [60, 55, 50, 58, 62],
-            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        };
-        
-        // Chart.js initialisieren
-        const myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [temperatureDataset, humidityDataset]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
