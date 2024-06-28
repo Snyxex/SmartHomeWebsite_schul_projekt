@@ -6,8 +6,8 @@ const port = 3000;
 const { createClient } = require('@supabase/supabase-js');
 
 
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
-const supabaseKey = process.env.REACT_APP_AMON_KEY;
+const supabaseUrl = 'https://kkkjznjllahgsvidwpax.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtra2p6bmpsbGFoZ3N2aWR3cGF4Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxOTQ4OTU3OCwiZXhwIjoyMDM1MDY1NTc4fQ.Jkck7tio8KYyEdLxE4833XHQAFqpS_ld5_uD9mTfSnU';
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 
@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 async function fetchData() {
   try {
     const { data: sensorData, error } = await supabase
-      .from('/rest/v1/sensor_data')
+      .from('sensor_data')
       .select('temperatur');
 
     if (error) {
