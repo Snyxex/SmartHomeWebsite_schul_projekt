@@ -288,8 +288,7 @@ document.addEventListener('DOMContentLoaded', fetchData);
 </div>
 
 
-    <script>
-
+<script>
 const motorCheckbox = document.getElementById('motorCheckbox');
 const motorText = document.getElementById('motor-text');
 let motorOn = false;
@@ -309,16 +308,12 @@ motorCheckbox.addEventListener('change', async function() {
 
     const data = await response.json();
     console.log('Antwort vom Server:', data.message);
-    alert('Daten erfolgreich gespeichert');
+    
   } catch (error) {
     console.error('Fehler:', error.message);
-    alert('Fehler beim Speichern der Daten');
+   
   }
 });
-
-
-
-
 </script>
 </body>
 </html>
