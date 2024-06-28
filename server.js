@@ -1,12 +1,14 @@
-import { createClient } from '@supabase/supabase-js'
+
 const express = require('express');
 const path = require('path');
 const app = express();
 const port = 3000;
+const { createClient } = require('@supabase/supabase-js');
 
-const supabaseUrl = process.env.REACT_APP_SUPABASE_URL
-const supabaseKey = process.env.REACT_APP_AMON_KEY
-const supabase = createClient(supabaseUrl, supabaseKey)
+
+const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;
+const supabaseKey = process.env.REACT_APP_AMON_KEY;
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 
 
