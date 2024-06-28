@@ -33,7 +33,7 @@ function updateChart(data) {
   const labels = latestData.map(item => {
     const timestamp = item.timestamp ? item.timestamp.substring(0, 10) : '';
     console.log(timestamp) // Get first 10 characters of timestamp
-    return `${item.temperature} ${timestamp}`;
+    return `${timestamp}`;
   });
   
   const temperatureData = latestData.map(item => item.temperature);
