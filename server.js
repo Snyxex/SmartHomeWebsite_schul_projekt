@@ -23,7 +23,7 @@ async function fetchData() {
   try {
     const { data: sensorData, error } = await supabase
       .from('/rest/v1/sensor_data')
-      .select('temperature');
+      .select('temperatur');
 
     if (error) {
       throw error;
