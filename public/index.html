@@ -24,15 +24,15 @@ function updateChart(data) {
   const sortedData = data.sort((a, b) => b.id - a.id);
 
   // Slice to get the latest 10 entries
-  const latestData = sortedData.slice(0, 10);
+  const latestData = sortedData.slice(sortedData.length - 10, sortedData.length);
 
   // Reverse the order to display the most recent data last
   latestData.reverse();
 
   // Extract temperatures and first 10 characters of the timestamp as labels
   const labels = latestData.map(item => {
-    const timestamp = item.timestamp ? item.timestamp.substring(0, 10) : '';
-    console.log(timestamp); // Get first 10 characters of timestamp
+    const timestamp = item.timestamp ? item.timestamp.substring(2, 10) : '';
+    console.log(timestamp) // Get first 10 characters of timestamp
     return ${timestamp};
   });
   
@@ -75,148 +75,177 @@ function updateChart(data) {
 }
    
 // Trigger the data fetch when the document is fully loaded
-document.addEventListener('DOMContentLoaded', fetchData)
+document.addEventListener('DOMContentLoaded', fetchData);
 </script>
 
 
 <style>
-    body {
+
+      body{
         font-family: 'Lato', sans-serif;
-        background: rgb(255, 255, 255);
-        background: linear-gradient(0deg, rgba(255, 255, 255, 1) 22%, rgba(0, 0, 0, 1) 76%, rgba(0, 0, 0, 1) 92%);
-    }
-    .h1 {
+
+        background: rgb(255,255,255);
+        background: linear-gradient(0deg, rgba(255,255,255,1) 22%, rgba(0,0,0,1) 76%, rgba(0,0,0,1) 92%);
+        
+      }
+      .h1{
         text-decoration: underline;
         color: white;
         font-weight: 80;
-    }
-    .h2 {
+      }
+      .h2{
         color: white;
         text-align: center;
         text-decoration: underline;
         font-weight: 60;
         font-size: xx-large;
-    }
+      }
+      .switch {
+  /* switch */
+  --switch-width: 40px;
+  --switch-height: 19px;
+  --switch-bg: rgb(131, 131, 131);
+  --switch-checked-bg: rgb(0, 218, 0);
+  --switch-offset: calc((var(--switch-height) - var(--circle-diameter)) / 2);
+  --switch-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
+  /* circle */
+  --circle-diameter: 18px;
+  --circle-bg: #fff;
+  --circle-shadow: 1px 1px 2px rgba(146, 146, 146, 0.45);
+  --circle-checked-shadow: -1px 1px 2px rgba(163, 163, 163, 0.45);
+  --circle-transition: var(--switch-transition);
+  /* icon */
+  --icon-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
+  --icon-cross-color: var(--switch-bg);
+  --icon-cross-size: 5px;
+  --icon-checkmark-color: var(--switch-checked-bg);
+  --icon-checkmark-size: 10px;
+  /* effect line */
+  --effect-width: calc(var(--circle-diameter) / 2);
+  --effect-height: calc(var(--effect-width) / 2 - 1px);
+  --effect-bg: var(--circle-bg);
+  --effect-border-radius: 1px;
+  --effect-transition: all .2s ease-in-out;
+}
 
-    .motor.controll{
-      border-radius: 18px;
-      background: linear-gradient(145deg, #e6e6e6, #ffffff);
-      box-shadow:  5px 5px 10px #bfbfbf,
-             -5px -5px 10px #ffffff;
+.switch input {
+  display: none;
+}
 
-    }
-    .switch {
-        --switch-width: 40px;
-        --switch-height: 19px;
-        --switch-bg: rgb(131, 131, 131);
-        --switch-checked-bg: rgb(0, 218, 0);
-        --switch-offset: calc((var(--switch-height) - var(--circle-diameter)) / 2);
-        --switch-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
-        --circle-diameter: 18px;
-        --circle-bg: #fff;
-        --circle-shadow: 1px 1px 2px rgba(146, 146, 146, 0.45);
-        --circle-checked-shadow: -1px 1px 2px rgba(163, 163, 163, 0.45);
-        --circle-transition: var(--switch-transition);
-        --icon-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
-        --icon-cross-color: var(--switch-bg);
-        --icon-cross-size: 5px;
-        --icon-checkmark-color: var(--switch-checked-bg);
-        --icon-checkmark-size: 10px;
-        --effect-width: calc(var(--circle-diameter) / 2);
-        --effect-height: calc(var(--effect-width) / 2 - 1px);
-        --effect-bg: var(--circle-bg);
-        --effect-border-radius: 1px;
-        --effect-transition: all .2s ease-in-out;
-    }
+.switch {
+  display: inline-block;
+}
 
-    .switch input {
-        display: none;
-    }
+.switch svg {
+  -webkit-transition: var(--icon-transition);
+  -o-transition: var(--icon-transition);
+  transition: var(--icon-transition);
+  position: absolute;
+  height: auto;
+}
 
-    .switch {
-        display: inline-block;
-    }
+.switch .checkmark {
+  width: var(--icon-checkmark-size);
+  color: var(--icon-checkmark-color);
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+}
 
-    .switch svg {
-        transition: var(--icon-transition);
-        position: absolute;
-        height: auto;
-    }
+.switch .cross {
+  width: var(--icon-cross-size);
+  color: var(--icon-cross-color);
+}
 
-    .switch .checkmark {
-        width: var(--icon-checkmark-size);
-        color: var(--icon-checkmark-color);
-        transform: scale(0);
-    }
+.slider {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  background: var(--switch-bg);
+  border-radius: 999px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  -webkit-transition: var(--switch-transition);
+  -o-transition: var(--switch-transition);
+  transition: var(--switch-transition);
+  cursor: pointer;
+}
 
-    .switch .cross {
-        width: var(--icon-cross-size);
-        color: var(--icon-cross-color);
-    }
+.circle {
+  width: var(--circle-diameter);
+  height: var(--circle-diameter);
+  background: var(--circle-bg);
+  border-radius: inherit;
+  -webkit-box-shadow: var(--circle-shadow);
+  box-shadow: var(--circle-shadow);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-transition: var(--circle-transition);
+  -o-transition: var(--circle-transition);
+  transition: var(--circle-transition);
+  z-index: 1;
+  position: absolute;
+  left: var(--switch-offset);
+}
 
-    .slider {
-        box-sizing: border-box;
-        width: var(--switch-width);
-        height: var(--switch-height);
-        background: var(--switch-bg);
-        border-radius: 999px;
-        display: flex;
-        align-items: center;
-        position: relative;
-        transition: var(--switch-transition);
-        cursor: pointer;
-    }
+.slider::before {
+  content: "";
+  position: absolute;
+  width: var(--effect-width);
+  height: var(--effect-height);
+  left: calc(var(--switch-offset) + (var(--effect-width) / 2));
+  background: var(--effect-bg);
+  border-radius: var(--effect-border-radius);
+  -webkit-transition: var(--effect-transition);
+  -o-transition: var(--effect-transition);
+  transition: var(--effect-transition);
+}
 
-    .circle {
-        width: var(--circle-diameter);
-        height: var(--circle-diameter);
-        background: var(--circle-bg);
-        border-radius: inherit;
-        box-shadow: var(--circle-shadow);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--circle-transition);
-        z-index: 1;
-        position: absolute;
-        left: var(--switch-offset);
-    }
+/* actions */
 
-    .slider::before {
-        content: "";
-        position: absolute;
-        width: var(--effect-width);
-        height: var(--effect-height);
-        left: calc(var(--switch-offset) + (var(--effect-width) / 2));
-        background: var(--effect-bg);
-        border-radius: var(--effect-border-radius);
-        transition: var(--effect-transition);
-    }
+.switch input:checked+.slider {
+  background: var(--switch-checked-bg);
+}
 
-    .switch input:checked + .slider {
-        background: var(--switch-checked-bg);
-    }
+.switch input:checked+.slider .checkmark {
+  -webkit-transform: scale(1);
+  -ms-transform: scale(1);
+  transform: scale(1);
+}
 
-    .switch input:checked + .slider .checkmark {
-        transform: scale(1);
-    }
+.switch input:checked+.slider .cross {
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+}
 
-    .switch input:checked + .slider .cross {
-        transform: scale(0);
-    }
+.switch input:checked+.slider::before {
+  left: calc(100% - var(--effect-width) - (var(--effect-width) / 2) - var(--switch-offset));
+}
 
-    .switch input:checked + .slider::before {
-        left: calc(100% - var(--effect-width) - (var(--effect-width) / 2) - var(--switch-offset));
-    }
+.switch input:checked+.slider .circle {
+  left: calc(100% - var(--circle-diameter) - var(--switch-offset));
+  -webkit-box-shadow: var(--circle-checked-shadow);
+  box-shadow: var(--circle-checked-shadow);
+}
+.motor-text{
+  color: white;
+  text-align: left;
+}
 
-    .switch input:checked + .slider .circle {
-        left: calc(100% - var(--circle-diameter) - var(--switch-offset));
-        box-shadow: var(--circle-checked-shadow);
-    }
-    .motor-text {
-        color: white;
-        text-align: left;
-    }
 </style>
 </head>
 <body>
@@ -241,26 +270,47 @@ document.addEventListener('DOMContentLoaded', fetchData)
           </div>
       </div>
   </label>
-  <label id="motor-text" class="motor-text"></label>
+  <label id="motor-text"></label>
   </nav>
 
-  <script>
-    const motorCheckbox = document.getElementById('motorCheckbox');
-    const motor_text = document.getElementById('motor-text');
 
-    let motorOn = false;
+    <script>
+      const turnOn = document.getElementById('turnOn');
+if(turnOn){
+  turnOn.addEventListener('click',function(){
+  console.log("on");
+});
+}else{
+  console.log("no turnOn");
+};
 
-    motorCheckbox.addEventListener('change', function() {
-      if (motorCheckbox.checked) {
-        motorOn = true;
-        console.log("Motor ist eingeschaltet", motorOn);
-        motor_text.textContent = "Motor ist eingeschaltet";
-      } else {
-        motorOn = false;
-        console.log("Motor ist ausgeschaltet", motorOn);
-        motor_text.textContent = "Motor ist ausgeschaltet";
-      }
-    });
-  </script>
+
+const turnOff = document.getElementById('turnOff');
+if(turnOff){
+  
+ turnOff.addEventListener('click',function(){
+  console.log("Off");
+});
+}else{
+  console.log("no turnOn");
+};
+
+const motorCheckbox = document.getElementById('motorCheckbox');
+const motor_text = document.getElementById('motor-text');
+
+let motorOn = false;
+
+motorCheckbox.addEventListener('change', function(){
+  if(motorCheckbox.checked){
+    motorOn = true;
+    console.log("motor ist eingeschaltet",motorOn);
+    motor_text.textContent("Motor ist Eingeschalten");
+  }else{
+    motorOn = false;
+    console.log("motor ist ausgeschaltet",motorOn);
+    motor_text.textContent("Motor ist Ausgeschalten");
+  }
+});
+</script>
 </body>
 </html>
