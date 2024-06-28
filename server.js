@@ -54,7 +54,7 @@ async function saveMotorData(motorOn) {
   try {
     const { data, error } = await supabase
       .from('motor_data')
-      .insert([{ motor_On: motorOn }]);
+      .insert([{motorOn}]);
 
     if (error) {
       console.error('Fehler beim Einfügen in die Datenbank:', error.message);
