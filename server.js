@@ -79,6 +79,34 @@ app.post('/saveMotorData', async (req, res) => {
 });
 
 
+async function saveLightData(lightOn) {
+  try {
+    const { data, error } = await supabase
+      .from('motor_data')
+      .update({lightOn:lightOn})
+      .eq('id',1);
+    if (error) {
+      console.error('Fehler beim Einfügen in die Datenbank:', error.message);
+      return;
+    }
+
+    console.log('Daten erfolgreich in Supabase eingefügt:', data);
+  } catch (error) {
+    console.error('Unbekannter Fehler:', error.message);
+  }
+}
+
+app.post('/saveLightData', async (req, res) => {
+  const { lightOn } = req.body;
+
+  try {
+    await saveLightData(lightOn);
+    res.json({ message: 'Daten erfolgreich gespeichert' });
+  } catch (error) {
+    res.status(500).json({ error: 'Fehler beim Speichern der Daten' });
+  }
+});
+
 // Server starten
 app.listen(port, () => {
   console.log(`Server läuft auf http://localhost:${port}`);

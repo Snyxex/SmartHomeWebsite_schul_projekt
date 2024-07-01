@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -88,19 +89,19 @@ body{
         background-color: black;
         
 }
-      .h1{
+.h1{
         text-decoration: underline;
         color: white;
         font-weight: 80;
-      }
-      .h2{
+}
+.h2{
         color: white;
         text-align: center;
         text-decoration: underline;
         font-weight: 60;
         font-size: xx-large;
-      }
-  .motor-controll {
+}
+.motor-controll {
   width: 90%; /* Breite auf 90% des Viewports setzen */
   max-width: 800px; /* Maximale Breite begrenzen */
   border: 2px solid white;
@@ -113,147 +114,60 @@ body{
   flex-direction: column;
 }
 
-  .switch {
-  /* switch */
-  --switch-width: 50px;
-  --switch-height: 24px;
-  --switch-bg: rgb(131, 131, 131);
-  --switch-checked-bg: rgb(0, 218, 0);
-  --switch-offset: calc((var(--switch-height) - var(--circle-diameter)) / 2);
-  --switch-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
-  /* circle */
-  --circle-diameter: 18px;
-  --circle-bg: #fff;
-  --circle-shadow: 1px 1px 2px rgba(146, 146, 146, 0.45);
-  --circle-checked-shadow: -1px 1px 2px rgba(163, 163, 163, 0.45);
-  --circle-transition: var(--switch-transition);
-  /* icon */
-  --icon-transition: all .2s cubic-bezier(0.27, 0.2, 0.25, 1.51);
-  --icon-cross-color: var(--switch-bg);
-  --icon-cross-size: 5px;
-  --icon-checkmark-color: var(--switch-checked-bg);
-  --icon-checkmark-size: 10px;
-  /* effect line */
-  --effect-width: calc(var(--circle-diameter) / 2);
-  --effect-height: calc(var(--effect-width) / 2 - 1px);
-  --effect-bg: var(--circle-bg);
-  --effect-border-radius: 1px;
-  --effect-transition: all .2s ease-in-out;
-}
-
-.switch input {
-  display: none;
-}
-
-.switch {
-  display: inline-block;
-}
-
-.switch svg {
-  -webkit-transition: var(--icon-transition);
-  -o-transition: var(--icon-transition);
-  transition: var(--icon-transition);
+/* Hide the default checkbox */
+.container input {
   position: absolute;
-  height: auto;
-}
-
-.switch .checkmark {
-  width: var(--icon-checkmark-size);
-  color: var(--icon-checkmark-color);
-  -webkit-transform: scale(0);
-  -ms-transform: scale(0);
-  transform: scale(0);
-}
-
-.switch .cross {
-  width: var(--icon-cross-size);
-  color: var(--icon-cross-color);
-}
-
-.slider {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  width: var(--switch-width);
-  height: var(--switch-height);
-  background: var(--switch-bg);
-  border-radius: 999px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  position: relative;
-  -webkit-transition: var(--switch-transition);
-  -o-transition: var(--switch-transition);
-  transition: var(--switch-transition);
+  opacity: 0;
   cursor: pointer;
+  height: 0;
+  width: 0;
 }
 
-.circle {
-  width: var(--circle-diameter);
-  height: var(--circle-diameter);
-  background: var(--circle-bg);
-  border-radius: inherit;
-  -webkit-box-shadow: var(--circle-shadow);
-  box-shadow: var(--circle-shadow);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-transition: var(--circle-transition);
-  -o-transition: var(--circle-transition);
-  transition: var(--circle-transition);
-  z-index: 1;
-  position: absolute;
-  left: var(--switch-offset);
+.container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 20px;
+  user-select: none;
 }
 
-.slider::before {
-  content: "";
-  position: absolute;
-  width: var(--effect-width);
-  height: var(--effect-height);
-  left: calc(var(--switch-offset) + (var(--effect-width) / 2));
-  background: var(--effect-bg);
-  border-radius: var(--effect-border-radius);
-  -webkit-transition: var(--effect-transition);
-  -o-transition: var(--effect-transition);
-  transition: var(--effect-transition);
+/* Create a custom checkbox */
+.checkmark {
+  position: relative;
+  height: 70px;
+  width: 70px;
+  border-radius: 10em;
+  background-color: #212121;
+  transition: 0.3s;
+  box-shadow: 6px 6px 10px #000000, -6px -6px 10px #3c3c3c;
 }
 
-/* actions */
-
-.switch input:checked+.slider {
-  background: var(--switch-checked-bg);
+.checkmark svg {
+  width: 45px;
+  height: 45px;
+  margin-top: 11px;
+  margin-left: 12.5px;
+  fill: #264d39;
+  transition: 0.2s;
 }
 
-.switch input:checked+.slider .checkmark {
-  -webkit-transform: scale(1);
-  -ms-transform: scale(1);
-  transform: scale(1);
+.checkmark:active {
+  box-shadow: 2px 2px 3px #000000, -2px -2px 3px #3c3c3c;
 }
 
-.switch input:checked+.slider .cross {
-  -webkit-transform: scale(0);
-  -ms-transform: scale(0);
-  transform: scale(0);
+/* When the checkbox is checked */
+.container input:checked ~ .checkmark {
+  box-shadow: 4px 4px 6px #000000, -4px -4px 6px #3c3c3c;
 }
 
-.switch input:checked+.slider::before {
-  left: calc(100% - var(--effect-width) - (var(--effect-width) / 2) - var(--switch-offset));
+.container input:checked ~ .checkmark svg {
+  fill: #00ff7b;
 }
 
-.switch input:checked+.slider .circle {
-  left: calc(100% - var(--circle-diameter) - var(--switch-offset));
-  -webkit-box-shadow: var(--circle-checked-shadow);
-  box-shadow: var(--circle-checked-shadow);
+.container input:checked ~ .checkmark:active {
+  box-shadow: 2px 2px 3px #000000, -2px -2px 3px #3c3c3c;
 }
+
 .motor-text{
 
     color: black;
@@ -273,29 +187,81 @@ body{
   <h1 class="h1">Smarte Überwachung</h1>
   <h2 class="h2">Temperatur</h2>
   <canvas id="myChart" width="100" height="50"></canvas>
+
   <div class="motor-controll">
     <h2>Automatisierungs Einstellungen</h2>
     <h3>Lüfter</h3> 
   
-    <label class="motor-text">Aus
-      <input id="motorCheckbox" type="checkbox">
-      <div class="slider">
-        <div class="circle">
-          <svg class="cross" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 365.696 365.696" y="0" x="0" height="6" width="6" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+      <label class="container">
+        <input type="checkbox" id="motorCheckbox"/>
+        <div class="checkmark">
+          <svg
+            version="1.1"
+            id="Capa_1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 49.548 49.549"
+            xml:space="preserve"
+          >
             <g>
-              <path data-original="#000000" fill="currentColor" d="M243.188 182.86 356.32 69.726c12.5-12.5 12.5-32.766 0-45.247L341.238 9.398c-12.504-12.503-32.77-12.503-45.25 0L182.86 122.528 69.727 9.374c-12.5-12.5-32.766-12.5-45.247 0L9.375 24.457c-12.5 12.504-12.5 32.77 0 45.25l113.152 113.152L9.398 295.99c-12.503 12.503-12.503 32.769 0 45.25L24.48 356.32c12.5 12.5 32.766 12.5 45.247 0l113.132-113.132L295.99 356.32c12.503 12.5 32.769 12.5 45.25 0l15.081-15.082c12.5-12.504 12.5-32.77 0-45.25zm0 0"></path>
-            </g>
-          </svg>
-          <svg class="checkmark" xml:space="preserve" style="enable-background:new 0 0 512 512" viewBox="0 0 24 24" y="0" x="0" height="10" width="10" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <g>
-              <path class="" data-original="#000000" fill="currentColor" d="M9.707 19.121a.997.997 0 0 1-1.414 0l-5.646-5.647a1.5 1.5 0 0 1 0-2.121l.707-.707a1.5 1.5 0 0 1 2.121 0L9 14.171l9.525-9.525a1.5 1.5 0 0 1 2.121 0l.707.707a1.5 1.5 0 0 1 0 2.121z"></path>
+              <g>
+                <g>
+                  <path
+                    d="M30.203,4.387v4.385c7.653,2.332,13.238,9.451,13.238,17.857c0,10.293-8.373,18.667-18.667,18.667
+              S6.106,36.922,6.106,26.629c0-8.405,5.585-15.525,13.238-17.857V4.387C9.323,6.835,1.855,15.866,1.855,26.629
+              c0,12.639,10.281,22.92,22.919,22.92s22.92-10.281,22.92-22.92C47.694,15.865,40.224,6.835,30.203,4.387z"
+                  ></path>
+                </g>
+                <g>
+                  <path
+                    d="M24.776,27.225c-1.41,0-2.554-1.145-2.554-2.555V2.554c0-1.41,1.144-2.554,2.554-2.554c1.41,0,2.554,1.144,2.554,2.554
+              V24.67C27.33,26.08,26.186,27.225,24.776,27.225z"
+                  ></path>
+                </g>
+              </g>
             </g>
           </svg>
         </div>
-      </div>
-      Ein
-    </label>
+      </label>
     <label id="motor-text" class="motor-text"></label>
+  
+    <h3>Licht</h3>
+    <div>
+
+        <label class="container">
+          <input type="checkbox"  id="lightCheckbox"/>
+          <div class="checkmark">
+            <svg
+              version="1.1"
+              id="Capa_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              viewBox="0 0 49.548 49.549"
+              xml:space="preserve"
+            >
+              <g>
+                <g>
+                  <g>
+                    <path
+                      d="M30.203,4.387v4.385c7.653,2.332,13.238,9.451,13.238,17.857c0,10.293-8.373,18.667-18.667,18.667
+                S6.106,36.922,6.106,26.629c0-8.405,5.585-15.525,13.238-17.857V4.387C9.323,6.835,1.855,15.866,1.855,26.629
+                c0,12.639,10.281,22.92,22.919,22.92s22.92-10.281,22.92-22.92C47.694,15.865,40.224,6.835,30.203,4.387z"
+                    ></path>
+                  </g>
+                  <g>
+                    <path
+                      d="M24.776,27.225c-1.41,0-2.554-1.145-2.554-2.555V2.554c0-1.41,1.144-2.554,2.554-2.554c1.41,0,2.554,1.144,2.554,2.554
+                V24.67C27.33,26.08,26.186,27.225,24.776,27.225z"
+                    ></path>
+                  </g>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </label>
+      <label id="light-text" class="light-text"></label>
+    </div>
   </div>
   
 
@@ -315,6 +281,32 @@ motorCheckbox.addEventListener('change', async function() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ motorOn })
+    });
+
+    const data = await response.json();
+    console.log('Antwort vom Server:', data.message);
+    
+  } catch (error) {
+    console.error('Fehler:', error.message);
+   
+  }
+});
+
+const lightCheckbox = document.getElementById('lightCheckbox');
+const lightText = document.getElementById('light-text');
+let lightOn = false;
+
+lightCheckbox.addEventListener('change', async function() {
+  lightOn = lightCheckbox.checked;
+  lightText.textContent = lightOn ? "Licht ist Eingeschaltet" : "Licht ist Ausgeschaltet";
+
+  try {
+    const response = await fetch('/saveLightData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ lightOn })
     });
 
     const data = await response.json();
