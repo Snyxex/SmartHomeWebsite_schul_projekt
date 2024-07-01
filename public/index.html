@@ -85,20 +85,25 @@ document.addEventListener('DOMContentLoaded', fetchData);
 <style>
 
 body{
-        font-family: 'Lato', sans-serif;
-        background-color: white;
+  background-color: white;
+    color: black;
+    transition: background-color 0.3s, color 0.3s;
+        
 }
 .h1{
         text-decoration: underline;
-        
+       
         font-weight: 80;
 }
 .h2{
-        
         text-align: center;
         text-decoration: underline;
         font-weight: 60;
 
+}
+body.dark-mode {
+    background-color: rgb(105,105,105) #696969 hsl(360,0%,41%);
+    color: rgb(245,245,245) #F5F5F5 hsl(360,0%,96%);
 }
 .motor-controll {
   width: 90%; /* Breite auf 90% des Viewports setzen */
@@ -402,15 +407,20 @@ lightCheckbox.addEventListener('change', async function() {
 
 
 
-const mode = document.getElementById('mode');
 
-mode.addEventListener('change',function() {
-   if(mode.checked){
-      
-   }else{
 
-   }
+document.addEventListener('DOMContentLoaded', function() {
+    const mode = document.getElementById('mode');
+
+    mode.addEventListener('change', function() {
+        if (this.checked) {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    });
 });
+
 </script>
 </body>
 </html>
