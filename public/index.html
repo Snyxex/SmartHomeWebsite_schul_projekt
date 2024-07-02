@@ -259,55 +259,6 @@ body.dark-mode {
     align-items: center;
     justify-content: space-between;
 }
-
-.leuchte-container {
-    display: flex;
-    align-items: center;
-    margin-left: 10px; /* Abstand zwischen Checkbox und Glühlampe */
-}
-
-.gluehlampe {
-    width: 60px;
-    height: 100px;
-    margin-left: 20px;
-    position: relative;
-    transition: background-color 0.5s;
-}
-
-.gluehlampe-kopf {
-    width: 60px;
-    height: 60px;
-    background-color: grey;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.gluehlampe-spirale {
-    width: 20px;
-    height: 40px;
-    background-color: grey;
-    position: absolute;
-    top: 60px;
-    left: 20px;
-}
-
-.gluehlampe-fuss {
-    width: 40px;
-    height: 10px;
-    background-color: black;
-    border-radius: 0 0 10px 10px;
-    position: absolute;
-    top: 100px;
-    left: 10px;
-}
-
-.gluehlampe.ein .gluehlampe-kopf {
-    background-color: yellow;
-}
-
-
         
 </style>
 
@@ -396,11 +347,6 @@ body.dark-mode {
       </div>
     </label>
     <label id="light-text" class="light-text"></label>
-    <div class="gluehlampe" id="gluehlampe">
-      <div class="gluehlampe-kopf"></div>
-      <div class="gluehlampe-spirale"></div>
-      <div class="gluehlampe-fuss"></div>
-  </div>
   </div>
 </body>  
     
@@ -473,19 +419,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
-document.addEventListener('DOMContentLoaded', (event) => {
-  const gluehlampe = document.getElementById('gluehlampe');
-  
-
-  lightCheckbox.addEventListener('click', () => {
-    gluehlampe.classList.toggle('ein');
-  });
-});
-
-
-
-
 </script>
 </body>
 </html> 
